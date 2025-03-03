@@ -14,7 +14,7 @@ function askPlayerName() {
     while (!playerName || playerName.trim() === '') {
         playerName = prompt('Name cannot be empty. Please enter your name:');
     }
-    alert(`Hello, ${playerName}! Let the game begin.`);
+    alert(`Hello, ${playerName}! Let  the game begin.`);
     initializeGame();
 }
 
@@ -123,3 +123,4 @@ document.querySelector('#leaderboard-container button').addEventListener('click'
 });
 
 // askPlayerName(); //
+
