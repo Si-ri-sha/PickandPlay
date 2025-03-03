@@ -51,7 +51,6 @@ h1 {
   box-shadow: 0 0 15px rgb(0, 204, 255), inset 0 0 15px rgb(255, 255, 255);
 }
 
-/* Strike-through effect */
 .strike {
   position: absolute;
   width: 0;
@@ -60,7 +59,7 @@ h1 {
   border-radius: 5px;
   transition: width 0.3s ease-in-out, transform 0.3s;
   transform-origin: left;
-  display: none; /* Initially hidden */
+  display: none; 
 }
 
 #reset {
