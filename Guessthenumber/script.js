@@ -1,7 +1,7 @@
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 let hints = generateHints(randomNumber);
+let leaderboardContainer = document.getElementById('leaderboard-container');
 
-// Display hints when the game starts
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("hints").innerHTML = `<strong>Hints:</strong> <br> ${hints.join("<br>")}`;
 });
@@ -34,17 +34,14 @@ function restartGame() {
 function generateHints(number) {
   let hintList = [];
 
-  // Hint 1: Number range
   if (number <= 50) {
     hintList.push("The number is between 1 and 50.");
   } else {
     hintList.push("The number is between 51 and 100.");
   }
 
-  // Hint 2: Even or Odd
   hintList.push(`The number is ${number % 2 === 0 ? "even" : "odd"}.`);
 
-  // Hint 3: Divisibility
   if (number % 5 === 0) {
     hintList.push("The number is divisible by 5.");
   } else if (number % 3 === 0) {
@@ -55,3 +52,5 @@ function generateHints(number) {
 
   return hintList;
 }
+
+

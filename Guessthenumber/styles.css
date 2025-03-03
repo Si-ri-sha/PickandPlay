@@ -40,8 +40,15 @@ input {
     margin: 10px 0;
 }
 
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 button {
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 10px 20px;
     margin: 10px;
     cursor: pointer;
@@ -53,6 +60,7 @@ button {
     letter-spacing: 1px;
     transition: 0.4s ease-in-out;
     box-shadow: 0 0 10px rgb(0, 204, 255);
+
 }
 
 button:hover {
