@@ -3,6 +3,10 @@ const cells = document.querySelectorAll(".cell");
 const status = document.getElementById("status");
 const resetBtn = document.getElementById("reset");
 
+const strike = document.createElement("div");
+strike.classList.add("strike");
+board.appendChild(strike);
+
 let currentPlayer = "X";
 let gameState = ["", "", "", "", "", "", "", "", ""];
 let gameActive = true;
@@ -21,9 +25,11 @@ function handleClick(event) {
     gameState[index] = currentPlayer;
     event.target.innerText = currentPlayer;
 
-    if (checkWinner()) {
+    const winningCombo = checkWinner();
+    if (winningCombo) {
         status.innerText = `${currentPlayer} wins! 🎉`;
         gameActive = false;
+        drawStrike(winningCombo);
         return;
     }
 
@@ -38,10 +44,35 @@ function handleClick(event) {
 }
 
 function checkWinner() {
-    return winningCombinations.some(combination => {
+    for (let combination of winningCombinations) {
         const [a, b, c] = combination;
-        return gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c];
-    });
+        if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+            return combination;
+        }
+    }
+    return null;
+}
+
+function drawStrike(combination) {
+    const [a, b, c] = combination;
+    const firstCell = cells[a];
+    const lastCell = cells[c];
+
+    const boardRect = board.getBoundingClientRect();
+    const firstRect = firstCell.getBoundingClientRect();
+    const lastRect = lastCell.getBoundingClientRect();
+
+    const x1 = firstRect.left + firstRect.width / 2 - boardRect.left;
+    const y1 = firstRect.top + firstRect.height / 2 - boardRect.top;
+    const x2 = lastRect.left + lastRect.width / 2 - boardRect.left;
+    const y2 = lastRect.top + lastRect.height / 2 - boardRect.top;
+
+    const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+    const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+
+    strike.style.width = `${length}px`;
+    strike.style.transform = `translate(${x1}px, ${y1}px) rotate(${angle}deg)`;
+    strike.style.display = "block";
 }
 
 function resetGame() {
@@ -50,8 +81,13 @@ function resetGame() {
     currentPlayer = "X";
     status.innerText = "Player X's turn";
     cells.forEach(cell => cell.innerText = "");
+    strike.style.display = "none";
 }
 
-cells.forEach(cell => cell.addEventListener("click", handleClick));
+cells.forEach((cell, index) => {
+    cell.dataset.index = index; 
+    cell.addEventListener("click", handleClick);
+});
+
 resetBtn.addEventListener("click", resetGame);
 status.innerText = "Player X's turn";
