@@ -1,46 +1,79 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  background-color: #0a0a0a; 
+  color: #ffffff;
   text-align: center;
-  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
 }
 
 h1 {
-  color: #333;
+  font-size: 2.5rem;
+  color: #00ccff;
+  text-shadow: 0 0 10px #00ccff, 0 0 20px #003366;
+  margin-bottom: 20px;
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-gap: 5px;
-  margin: 20px auto;
-  width: 310px;
+  grid-template-columns: repeat(3, 120px);
+  grid-template-rows: repeat(3, 120px);
+  gap: 8px;
+  background: #003366;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #00ccff;
 }
 
 .cell {
-  width: 100px;
-  height: 100px;
-  background-color: white;
-  border: 2px solid black;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 2em;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #003366, #0099ff);
+  color: white;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px #00ccff;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .cell:hover {
-  background-color: #ddd;
+  background: #00ccff;
+  box-shadow: 0 0 15px #00ccff, inset 0 0 15px #ffffff;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
+#reset {
   margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(45deg, #0099ff, #003366);
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 0 10px #00ccff;
+  transition: all 0.3s ease-in-out;
+}
+
+#reset:hover {
+  background: #00ccff;
+  color: #003366;
+  box-shadow: 0 0 20px #00ccff;
 }
 
 #status {
-  font-size: 18px;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 10px;
+  color: #00ccff;
+  margin-top: 15px;
+  text-shadow: 0 0 10px #00ccff;
 }
