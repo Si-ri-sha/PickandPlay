@@ -1,38 +1,80 @@
-body{
-  font-family: Arial, sans-serif;
-  display:flex;
-  justify-content: center;
-  align-items:center;
-  height:100vh;
-  background-color: rgb(244, 244, 244);
-  margin-top:0;
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: radial-gradient(circle, #0a0a0a, #1a1a2e);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.game-container{
-  text-align:center;
-  background-color: rgb(255, 255, 255);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+.game-container {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgb(0, 204, 255);
+    width: 90%;
+    max-width: 400px;
 }
 
-button{
-  margin-top: 10px;
-  padding: 8px 15px;
-  border:none;
-  background-color: rgb(0, 102, 255);
-  color: rgb(255, 255, 255);
-  border-radius: 5px;
-  cursor:pointer;
+h1 {
+    font-size: 2.5rem;
+    color: rgb(0, 204, 255);
+    text-shadow: 0 0 15px rgb(0, 204, 255), 0 0 30px rgb(0, 136, 255);;
 }
 
-button:hover{
-  background-color:  rgba(0, 102, 255, 0.9);
+input {
+    width: 80%;
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: 2px solid rgb(0, 204, 255);;
+    background: rgb(26, 26, 46);;
+    color: rgb(255, 255, 255);;
+    text-align: center;
+    margin: 10px 0;
 }
 
-input{
-  padding: 7px 13px;
-  border:1px solid rgba(0,0,0, 0.6);
-  border-radius: 5px;
-  width:auto;
+button {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    background: linear-gradient(45deg, rgb(0, 51, 102), rgb(0, 153, 255));
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.4s ease-in-out;
+    box-shadow: 0 0 10px rgb(0, 204, 255);
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgb(0, 204, 255);
+}
+
+#message, #hints {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 15px;
+    color: rgb(0, 255, 204);
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+    input {
+        font-size: 1rem;
+    }
+    button {
+        font-size: 1rem;
+    }
 }
