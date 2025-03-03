@@ -1,103 +1,125 @@
-// script.js
+const gameBoard = document.getElementById('game-board');
+const timerDisplay = document.getElementById('timer');
+const leaderboardContainer = document.getElementById('leaderboard-container');
 
-// DOM Elements
-const gameGrid = document.querySelector('.game-grid');
-const restartButton = document.getElementById('restart');
-const timerElement = document.getElementById('timer');
-const scoreElement = document.getElementById('score');
-
-// Game Variables
-const symbols = ['<div>', '</div>', '{', '}', '()', '[]', '<>', '</>']; // Symbols to match
-let shuffledCards = [];
-let flippedCards = [];
-let matchedCards = [];
+const emojis = ['😊', '😂', '😎', '🥺', '😜', '😳', '😍', '😇'];
 let timer = 0;
-let score = 0;
-let timerInterval;
+let flippedCards = [];
+let matchedPairs = 0;
+let interval;
+let playerName = '';
 
-// Shuffle the symbols and duplicate them to create pairs
-function shuffleCards() {
-  const cards = [...symbols, ...symbols]; // Duplicate array for pairs
-  return cards.sort(() => Math.random() - 0.5);
+function askPlayerName() {
+    playerName = prompt('Welcome to the Memory Card Game! Please enter your name to start:');
+    while (!playerName || playerName.trim() === '') {
+        playerName = prompt('Name cannot be empty. Please enter your name:');
+    }
+    alert(`Hello, ${playerName}! Let the game begin.`);
+    initializeGame();
 }
 
-// Generate the game grid
-function generateGrid() {
-  shuffledCards = shuffleCards();
-  gameGrid.innerHTML = ''; // Clear existing grid
-  shuffledCards.forEach((symbol, index) => {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.dataset.symbol = symbol;
-    card.innerHTML = `<span>${symbol}</span>`; // Hidden initially
-    card.addEventListener('click', () => flipCard(card));
-    gameGrid.appendChild(card);
-  });
+function initializeGame() {
+    const cards = [...emojis, ...emojis]; 
+    shuffle(cards);
+    gameBoard.innerHTML = '';
+    cards.forEach(emoji => {
+        const cardElement = document.createElement('div');
+        cardElement.classList.add('card');
+        cardElement.dataset.emoji = emoji; 
+        cardElement.addEventListener('click', () => flipCard(cardElement));
+        gameBoard.appendChild(cardElement);
+    });
+    resetTimer();
+    startTimer();
+    matchedPairs = 0;
 }
 
-// Handle card flipping
+function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+}
+
 function flipCard(card) {
-  if (flippedCards.length >= 2 || card.classList.contains('flipped')) return;
+    if (card.classList.contains('flipped') || flippedCards.length === 2) return;
+    card.classList.add('flipped');
+    card.innerHTML = `<span>${card.dataset.emoji}</span>`;
+    flippedCards.push(card);
 
-  card.classList.add('flipped');
-  card.innerHTML = `<span>${card.dataset.symbol}</span>`;
-  flippedCards.push(card);
-
-  if (flippedCards.length === 2) checkMatch();
+    if (flippedCards.length === 2) {
+        checkMatch();
+    }
 }
 
-// Check for a match
 function checkMatch() {
-  const [card1, card2] = flippedCards;
-
-  if (card1.dataset.symbol === card2.dataset.symbol) {
-    matchedCards.push(card1, card2);
-    score += 10; // Increment score for correct match
-    scoreElement.textContent = score;
-
-    if (matchedCards.length === shuffledCards.length) endGame(); // Check for win
-  } else {
-    setTimeout(() => {
-      card1.classList.remove('flipped');
-      card2.classList.remove('flipped');
-      card1.innerHTML = '';
-      card2.innerHTML = '';
-    }, 1000); // Flip back after a delay
-  }
-
-  flippedCards = []; // Reset flipped cards
+    const [card1, card2] = flippedCards;
+    if (card1.dataset.emoji === card2.dataset.emoji) {
+        matchedPairs++;
+        flippedCards = [];
+        if (matchedPairs === emojis.length) endGame();
+    } else {
+        setTimeout(() => {
+            card1.classList.remove('flipped');
+            card2.classList.remove('flipped');
+            card1.innerHTML = '';
+            card2.innerHTML = '';
+            flippedCards = [];
+        }, 1000);
+    }
 }
 
-// Start the timer
 function startTimer() {
-  timer = 0;
-  timerElement.textContent = timer;
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    timer++;
-    timerElement.textContent = timer;
-  }, 1000);
+    interval = setInterval(() => {
+        timer++;
+        timerDisplay.textContent = timer;
+    }, 1000);
 }
 
-// End the game
+function resetTimer() {
+    clearInterval(interval);
+    timer = 0;
+    timerDisplay.textContent = timer;
+}
+
 function endGame() {
-  clearInterval(timerInterval);
-  alert(`Congratulations! You completed the game in ${timer} seconds with a score of ${score}.`);
+    clearInterval(interval);
+    saveScore(playerName);
+    showLeaderboard();
 }
 
-// Restart the game
-function restartGame() {
-  matchedCards = [];
-  flippedCards = [];
-  score = 0;
-  scoreElement.textContent = score;
-  generateGrid();
-  startTimer();
+function saveScore(name) {
+    const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    const date = new Date().toLocaleDateString();
+    leaderboard.push({ name, score: timer, date });
+    leaderboard.sort((a, b) => a.score - b.score);
+    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
 }
 
-// Initialize the game
-restartButton.addEventListener('click', restartGame);
-window.addEventListener('load', () => {
-  generateGrid();
-  startTimer();
+function showLeaderboard() {
+    const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    const leaderboardTable = document.getElementById('leaderboard-table').getElementsByTagName('tbody')[0];
+    leaderboardTable.innerHTML = '';
+    leaderboard.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${entry.name}</td>
+            <td>${entry.score}</td>
+            <td>${entry.date}</td>`;
+        leaderboardTable.appendChild(row);
+    });
+    leaderboardContainer.style.display = 'block';
+}
+
+function resetLeaderboard() {
+    if (confirm('Are you sure you want to reset the leaderboard?')) {
+        localStorage.removeItem('leaderboard');
+        showLeaderboard();
+    }
+}
+
+document.getElementById('restart').addEventListener('click', askPlayerName);
+document.getElementById('show-leaderboard').addEventListener('click', showLeaderboard);
+document.querySelector('#leaderboard-container button').addEventListener('click', () => {
+    leaderboardContainer.style.display = 'none';
 });
+
+// askPlayerName(); //

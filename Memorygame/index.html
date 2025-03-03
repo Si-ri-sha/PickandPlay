@@ -3,20 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Memory Match Game</title>
+    <title>Memory Card Game</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="game-container">
-      <header>
-        <h1>Memory Match Game</h1>
-        <div class="timer">Time: <span id="timer">0</span> seconds</div>
-        <div class="score">Score: <span id="score">0</span></div>
-      </header>
+    <div id="game-container">
+      <h1>Memory Card Game</h1>
+      <p>Time: <span id="timer">0</span> seconds</p>
+      <div id="game-board" class="game-board"></div>
+      <button id="restart">Restart</button>
+      <button id="show-leaderboard">Show Leaderboard</button>
 
-      <div class="game-grid"></div>
-
-      <button id="restart">Restart Game</button>
+      <!-- Leaderboard Modal -->
+      <div id="leaderboard-container" class="leaderboard-container">
+        <table id="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Name</th>
+              <th>Score</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button>Close</button>
+      </div>
     </div>
 
     <script src="script.js"></script>

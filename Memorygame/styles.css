@@ -1,110 +1,149 @@
-/* style.css */
+/* Import futuristic font */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f5;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 20px;
+    font-family: 'Orbitron', sans-serif;
+    background: radial-gradient(circle, #0a0a0a, #1a1a2e);
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 /* Game Container */
-.game-container {
-  max-width: 600px;
-  width: 100%;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
+#game-container {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00ccff;
+    width: 90%;
+    max-width: 500px;
 }
 
-header {
-  margin-bottom: 20px;
-}
-
+/* Title */
 h1 {
-  font-size: 2rem;
-  color: #555;
+    font-size: 2.5rem;
+    color: #00ccff;
+    text-shadow: 0 0 15px #00ccff, 0 0 30px #0088ff;
 }
 
-.timer, .score {
-  font-size: 1.2rem;
-  margin: 10px 0;
+/* Timer */
+p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00ffcc;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #6200ea;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+/* Game Board */
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 400px;
 }
 
-button:hover {
-  background-color: #4500a9;
-}
-
-/* Game Grid */
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin: 20px 0;
-}
-
+/* Make sure the game cards are centered properly */
 .card {
-  width: 100%;
-  aspect-ratio: 1;
-  background-color: #6200ea;
-  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffffff;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 2rem; /* Adjust emoji size */
+  text-align: center;
+  width: 80px;
+  height: 100px;
+  background: linear-gradient(45deg, #003366, #0099ff);
+  border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.4s, background-color 0.3s;
-  transform-style: preserve-3d;
-  position: relative;
+  box-shadow: 0 0 10px #00ccff;
+  transition: 0.4s ease-in-out;
 }
 
-/* Ensure card content is visible initially */
+/* Prevents text shifting and ensures centered content */
 .card span {
-  display: block;
-  visibility: hidden;
-  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  line-height: 1; /* Keeps emoji centered */
 }
 
-.card.flipped span {
-  visibility: visible;
-  transform: rotateY(0);
+
+.card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #00ccff;
 }
 
-.card.flipped {
-  background-color: #ffffff;
-  color: #6200ea;
-  transform: rotateY(180deg);
+/* Buttons */
+button {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(45deg, #003366, #0099ff);
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.4s ease-in-out;
+    box-shadow: 0 0 10px #00ccff;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #00ccff;
+}
+
+/* Leaderboard Modal */
+.leaderboard-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #00ccff;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #00ccff;
+    color: #ffffff;
+}
+
+th {
+    background: #00ccff;
+    color: #000;
 }
 
 /* Responsive Design */
-@media (max-width: 500px) {
-  .game-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+    button {
+        font-size: 1rem;
+    }
+    .game-board {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
