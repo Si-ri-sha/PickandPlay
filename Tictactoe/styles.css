@@ -89,3 +89,26 @@ h1 {
   margin-top: 15px;
   text-shadow: 0 0 10px rgb(0, 204, 255);
 }
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .board {
+    max-width: 280px;
+  }
+
+  .cell {
+    font-size: 2rem;
+  }
+
+  #reset {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  #status {
+    font-size: 1.1rem;
+  }
+}
