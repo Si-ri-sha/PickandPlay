@@ -22,12 +22,12 @@ function handleClick(event) {
 
     if (!gameActive || gameState[index] !== "") return;
 
-    gameState[index] = currentPlayer;
-    event.target.innerText = currentPlayer;
+    gameState[index] = "X"; 
+    event.target.innerText = "X";
 
     const winningCombo = checkWinner();
     if (winningCombo) {
-        status.innerText = `${currentPlayer} wins! 🎉`;
+        status.innerText = "You win! 🎉";
         gameActive = false;
         drawStrike(winningCombo);
         return;
@@ -39,15 +39,46 @@ function handleClick(event) {
         return;
     }
 
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
-    status.innerText = `Player ${currentPlayer}'s turn`;
+    status.innerText = "System is thinking...";
+    
+    setTimeout(systemMove, 500);
+}
+
+function systemMove() {
+    if (!gameActive) return;
+
+    const emptyCells = gameState
+        .map((cell, index) => (cell === "" ? index : null))
+        .filter(index => index !== null);
+
+    if (emptyCells.length === 0) return;
+
+    const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    gameState[randomIndex] = "O";
+    cells[randomIndex].innerText = "O";
+
+    const winningCombo = checkWinner();
+    if (winningCombo) {
+        status.innerText = "System wins! 🤖";
+        gameActive = false;
+        drawStrike(winningCombo);
+        return;
+    }
+
+    if (!gameState.includes("")) {
+        status.innerText = "It's a Draw! 🤝";
+        gameActive = false;
+        return;
+    }
+
+    status.innerText = "Your turn!";
 }
 
 function checkWinner() {
     for (let combination of winningCombinations) {
         const [a, b, c] = combination;
         if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
-            return combination;
+            return combination; 
         }
     }
     return null;
@@ -79,7 +110,7 @@ function resetGame() {
     gameState = ["", "", "", "", "", "", "", "", ""];
     gameActive = true;
     currentPlayer = "X";
-    status.innerText = "Player X's turn";
+    status.innerText = "Your turn!";
     cells.forEach(cell => cell.innerText = "");
     strike.style.display = "none";
 }
@@ -90,4 +121,4 @@ cells.forEach((cell, index) => {
 });
 
 resetBtn.addEventListener("click", resetGame);
-status.innerText = "Player X's turn";
+status.innerText = "Your turn!";
