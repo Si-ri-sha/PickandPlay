@@ -16,7 +16,7 @@ body {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: rgb(0, 204, 255);
@@ -44,9 +44,10 @@ h1 {
 .game-links a {
     display: inline-block;
     width: 100%;
-    padding: 12px; 
+    max-width: 270px;
+    padding: 15px;
     text-decoration: none;
-    font-size: 1.2rem; 
+    font-size: 1.4rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
