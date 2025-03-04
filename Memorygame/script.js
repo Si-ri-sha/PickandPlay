@@ -12,9 +12,9 @@ let playerName = '';
 function askPlayerName() {
     playerName = prompt('Welcome to the Memory Card Game! Please enter your name to start:');
     while (!playerName || playerName.trim() === '') {
-        playerName = prompt('Name cannot be empty. Please enter your name:');
+        playerName = prompt('Name cannot be empty. Please enter your Name:');
     }
-    alert(`Hello, ${playerName}! Let  the game begin.`);
+    alert(`Hello, ${playerName}! Let the game begin.`);
     initializeGame();
 }
 
